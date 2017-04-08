@@ -1,0 +1,16 @@
+Glucose Meter Reading Report: Your Last 30 Days
+
+Your Glucose Levels Were:
+
+Days 1 - 5	Date: 04.03.2017 -- 107 mg/dl	Date: 09.03.2017 -- 127 mg/dl	Date: 10.03.2017 -- 150 mg/dl	Date: 11.03.2017 -- 97 mg/dl	Date: 12.03.2017 -- 95 mg/dl
+Days 5 - 10	Date: 13.03.2017 -- 142 mg/dl	Date: 14.03.2017 -- 85 mg/dl	Date: 15.03.2017 -- 111 mg/dl	Date: 17.03.2017 -- 95 mg/dl	Date: 18.03.2017 -- 118 mg/dl
+Days 10 - 15	Date: 19.03.2017 -- 113 mg/dl	Date: 20.03.2017 -- 115 mg/dl	Date: 21.03.2017 -- 101 mg/dl	Date: 22.03.2017 -- 95 mg/dl	Date: 24.03.2017 -- 108 mg/dl
+Days 15 - 20	Date: 25.03.2017 -- 112 mg/dl	Date: 26.03.2017 -- 125 mg/dl	Date: 27.03.2017 -- 114 mg/dl	Date: 28.03.2017 -- 133 mg/dl	Date: 29.03.2017 -- 154 mg/dl
+Days 20 - 25	Date: 30.03.2017 -- 139 mg/dl	Date: 31.03.2017 -- 147 mg/dl	Date: 01.04.2017 -- 156 mg/dl	Date: 02.04.2017 -- 131 mg/dl	Date: 03.04.2017 -- 132 mg/dl
+Days 25 - 30	Date: 04.04.2017 -- 141 mg/dl	Date: 05.04.2017 -- 102 mg/dl	Date: 06.04.2017 -- 104 mg/dl	Date: 07.04.2017 -- 137 mg/dl	Date: 08.04.2017 -- 90 mg/dl
+
+Your Average Glucose Level Was: 119.200000
+
+Your Lowest Glucose Level Was: 85
+
+Your Highest Glucose Level Was: 156
