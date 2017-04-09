@@ -16,10 +16,10 @@ int findMin();
 
 char *dates[31]; /* array of strings that stores the datas from the input file */
 char *data[31]; /* array of strings that stores the data/reading from the input file */
-int dataVals[30];
-double average;
-int max;
-int min;
+int dataVals[30]; /* array of the data but converted to int */
+double average; /* the avrg of the dataVals*/
+int max; /* max of dataVals*/
+int min; /* min of dataVals */
 
 int main (int argc, char* argv[]){
     
@@ -34,6 +34,7 @@ int main (int argc, char* argv[]){
     }
     else{
         printf("File found: %s\n",argv[1]);
+        printf("Pulling and computing data...\n");
     }
     
     mallocData();
@@ -71,13 +72,13 @@ int main (int argc, char* argv[]){
     }
     
 /*do a quick check, see printData*/
-    printData();
+    //printData();
     
     convertToInt();
     average = computeAverage();
     min = findMin();
     max = findMax();
-    printf("Average reading for last %d days was: %f\nMinimum reading for last %d days was: %d\nMaximum reading for last %d days was: %d\n", NUMDAYS, average, NUMDAYS, min, NUMDAYS, max);
+    
 
 /* calls method to output data to a file */
     outputData(outputFile);
@@ -108,7 +109,7 @@ void parseLine(char*line, int index){
     
 }//end parseLine
 
-/* once properly working should output the data to the txt file passed in after the .csv (argv[2])
+/* output the data to the txt file passed in after the .csv (argv[2])
     assuming this is not empty */
 void outputData(char *outputFile){
     
@@ -156,6 +157,7 @@ void outputData(char *outputFile){
 	}
         x--;
     }
+	
 	fputs("\nYour Average Glucose Level Was: ", tmp);
 	fprintf(tmp, "%f\n", average);
 	fputs("\nYour Lowest Glucose Level Was: ", tmp);
@@ -180,7 +182,8 @@ void printData(){
         printf(" Reading: %s\n",data[cnt]);
         cnt++;
     }
-}
+    printf("Average reading for last %d days was: %f\nMinimum reading for last %d days was: %d\nMaximum reading for last %d days was: %d\n", NUMDAYS, average, NUMDAYS, min, NUMDAYS, max);
+}//end printData
 
 /* ensures there is proper space for all the data put into these arrays */
 void mallocData(){
@@ -191,7 +194,7 @@ void mallocData(){
 //	dataVals[cnt] = malloc(sizeof(int)*3);
         cnt++;
     }
-}
+}//end mallocData
 
 /* Converts data string array to double array */
 void convertToInt(){
@@ -199,8 +202,9 @@ void convertToInt(){
 	for(i; i<NUMDAYS; i++){
 		dataVals[i] = atoi(data[i]);
 	}
-}
+}//end convertToInt
 
+/* computes the average of dataVals, aka the average of the readings */
 double computeAverage(){
 	int i=0;
 	double sum=0.0;
@@ -208,8 +212,9 @@ double computeAverage(){
 		sum += dataVals[i];
 	}
 	return sum/NUMDAYS;
-}
+}//end computeAverage
 
+/* finds the highest data value in dataVals aka, highest reading */
 int findMax(){
 	max = dataVals[0];
 	int i=1;
@@ -219,8 +224,9 @@ int findMax(){
 		}
 	}
 	return max;
-}
+}//end findMax
 
+/* finds min data value in dataVals aka, lowest reading */
 int findMin(){
 	min = dataVals[0];
 	int i=1;
@@ -230,4 +236,4 @@ int findMin(){
 		}
 	}
 	return min;
-}
+}//end findMin
