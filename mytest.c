@@ -13,6 +13,7 @@ void convertToInt();
 double computeAverage();
 int findMax();
 int findMin();
+void sendEmail();
 
 char *dates[31]; /* array of strings that stores the datas from the input file */
 char *data[31]; /* array of strings that stores the data/reading from the input file */
@@ -81,6 +82,8 @@ int main (int argc, char* argv[]){
 
 /* calls method to output data to a file */
     outputData(outputFile);
+
+    sendEmail();
     
     printf("End Main, exiting....\n");
     
@@ -230,4 +233,22 @@ int findMin(){
 		}
 	}
 	return min;
+}
+
+void sendEmail(){
+        char cmd[100];  // to hold the command.
+        char to[] = "tug14646@temple.edu"; // email id of the recepient.
+        char body[] = "This is a test email sent from a BeagleBone Black.";    // email body.
+        char tempFile[100];     // name of tempfile.
+
+        strcpy(tempFile,tempnam("/tmp","sendmail")); // generate temp file name.
+
+        FILE *fp = fopen(tempFile,"w"); // open it for writing.
+        fprintf(fp,"%s\n",body);        // write body to it.
+//        fclose(fp);             // close it.
+
+        sprintf(cmd,"sendmail %s < %s",to,tempFile); // prepare command.
+        system(cmd);     // execute it.
+
+
 }
