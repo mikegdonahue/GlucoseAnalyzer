@@ -301,7 +301,7 @@ void createPlotFile(){
 	FILE *fp = fopen("plotdata.dat", "w");
 	int i=0;
 	for (i; i<NUMDAYS; i++){
-		fputs(dates[i], fp);
+		fprintf(fp, "%d", i+1);
 		fputs("\t", fp);
 		fputs(data[i], fp);
 		fputs("\n", fp);
