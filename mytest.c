@@ -1,10 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
-//#define NUMDAYS 30 /* Number of days of data to pull and compute */
+#define MAXDAYS 120 /* prevent overflow by the usr */
+#define PATH_BUFFER 400 /* buffer for path provided by usr */
+#define BUFFER 100 /* general buffer */ 
 
-void openFile(char *inputFile,char *outPut,char *settingsFile); /* opens the files */
+void openFile(char *outPut,char *settingsFile); /* opens the files */
 void getSettings(); /* idea for importing settings from an extra .txt file for various outputs */
 void importLines(); /* calls parseLine, getLine */
 char *getLine (FILE *fp); /* gets line from file */
@@ -19,21 +22,23 @@ int findMin(); /* find the min in dataVals */
 void outputData(char *outputFile); /* outputs the data to a file passed in at argv[2] */
 void sendEmail(); /* not working - but should send email of data */
 void createPlotFile(); /* creates a file to be used for plotting purposes */
+void blinkLeds(); /* should blink usr1 led at mission success */
 
 FILE *fp; /* file pointer with argv[1] */
 FILE *settings; /* settings file */
 char *outputFile; /* file pointer with argv[2] if passed in */
-char *dates[31]; /* array of strings that stores the datas from the input file */
-char *data[31]; /* array of strings that stores the data/reading from the input file */
-int dataVals[30]; /* array of the data but converted to int */
+char *dataPath; /* path where data.csv file is, if NULL defaults to current dir */
+char *dates[MAXDAYS]; /* array of strings that stores the datas from the input file */
+char *data[MAXDAYS]; /* array of strings that stores the data/reading from the input file */
+int dataVals[MAXDAYS]; /* array of the data but converted to int */
 double average; /* the avrg of the dataVals*/
 int max; /* max of dataVals*/
 int min; /* min of dataVals */
-int NUMDAYS;
+int NUMDAYS; /* num of days to pull by the usr in the settings file */
 
 int main (int argc, char* argv[]){
     
-    openFile(argv[1],argv[2],argv[3]);
+    openFile(argv[1],argv[2]);
     
     getSettings();
     
@@ -41,13 +46,15 @@ int main (int argc, char* argv[]){
     
     calcData();
     
-    // printData();
+    //printData();
     
     outputData(outputFile);
 
     createPlotFile();
     
-    // sendEmail();
+    //sendEmail();
+    
+    blinkLeds();
     
     printf("End Main, exiting....\n");
     
@@ -56,42 +63,60 @@ int main (int argc, char* argv[]){
 }//end Main
 
 /* opens the files passed into argv[] */
-void openFile(char *inputFile,char *outPut,char *settingsFile){
+void openFile(char *outPut,char *settingsFile){
     
-    /* open the file passed into at the start of the program
-   currently only looks for argv[1] */
+/* open settings file */ 
     settings = fopen(settingsFile,"r");
     if(settings==NULL){
         printf("Settings File Not Found...\n");
         exit(EXIT_FAILURE);
     }
     
-    fp = fopen(inputFile,"r");
-    if(fp==NULL){
-        exit(EXIT_FAILURE);
-    }
-    else{
-        printf("File found: %s\n",inputFile);
-        printf("Pulling and computing data...\n");
-    }
-    
     mallocData();
-
     
-/* get name of ouputFile from argv[2]*/   
+/* get name of ouputFile from argv[1]*/ 
     if(outPut==NULL){
         printf("No ouptput file given..\n");
         exit(EXIT_FAILURE);
     }
     else{
+        outputFile = malloc(sizeof(char)*BUFFER);
         outputFile = outPut;
     }
+    
 }//end openFile
 
+/* looks at the settings files and thus affects the overall settings, also opens the input file */
 void getSettings(){
     int numDays;
+    dataPath = malloc(sizeof(char)*PATH_BUFFER);
     fscanf(settings,"%d",&numDays);
-    NUMDAYS=numDays;
+    fscanf(settings,"%s",dataPath);
+    
+    if(strcmp(dataPath,"null")!=0){
+        printf("Path: %s\n",dataPath);
+        if((fp = fopen(dataPath,"r"))==NULL){
+            printf("Error opening data file...\n");
+            exit(EXIT_FAILURE);
+        }
+    }else{//default 
+        printf("No input path found, defaulting to current dir...\n");
+        dataPath = "data.csv";
+        if((fp = fopen(dataPath,"r"))==NULL){
+            printf("Error opening data file...\n");
+            exit(EXIT_FAILURE);
+        }
+    }
+    
+    if(numDays==0){//default 
+        NUMDAYS = 30;
+    }
+    if(numDays>MAXDAYS){
+        printf("numDays to large defaulting to MAXDAYS (120)...\n");
+        NUMDAYS=MAXDAYS;
+    }else{
+        NUMDAYS=numDays;
+    }
     printf("Settings File Found numDays: %d\n",numDays);
 }
 
@@ -102,8 +127,8 @@ void importLines(){
     fseek(fp,393,SEEK_SET);//seek to first needed line of dates and data
     char c;
     int x=0;
-    char *test[30];
-    while(x<30){
+    char *test[NUMDAYS];
+    while(x<NUMDAYS){
         test[x]=malloc(sizeof(char)*26);
         test[x]=getLine(fp);
         x++;
@@ -112,7 +137,7 @@ void importLines(){
 /* parse the lines for dates and data */
     x=0;
     int a=0;
-    while(x<30){
+    while(x<NUMDAYS){
         parseLine(test[a],a);
         a++;
         x++;
@@ -144,7 +169,7 @@ void parseLine(char*line, int index){
 void printData(){
     int cnt=0;
     printf("Printing data...\n");
-    while(cnt<30){
+    while(cnt<NUMDAYS){
         printf("%d: %s",cnt+1,dates[cnt]);
         printf(" Reading: %s",data[cnt]);
         printf(" DataVal: %d\n",dataVals[cnt]);
@@ -156,10 +181,10 @@ void printData(){
 /* ensures there is proper space for all the data put into these arrays */
 void mallocData(){
     int cnt=0;
-    while(cnt<30){
+    while(cnt<NUMDAYS){
         dates[cnt]=malloc(sizeof(char)*10);
         data[cnt]=malloc(sizeof(char)*5);
-//	dataVals[cnt] = malloc(sizeof(int)*3);
+        //dataVals[cnt] = malloc(sizeof(int)*3);
         cnt++;
     }
 }//end mallocData
@@ -306,4 +331,28 @@ void createPlotFile(){
 		fputs(data[i], fp);
 		fputs("\n", fp);
 	}
-}
+}//end createPlotFile
+
+/* blinks usr1 leds for mission success */
+void blinkLeds(){
+    FILE *LEDControl = NULL;
+    char *LEDBright = "/sys/class/leds/beaglebone:green:usr1/brightness";
+    int loops = 2;
+    int x = 0;
+    while (x<loops){
+        if((LEDControl = fopen(LEDBright,"r+"))!=NULL){
+            //printf("Blinking\n");
+            fwrite("1",sizeof(char),1,LEDControl);
+            //fclose(LEDControl);
+        }
+        rewind(LEDControl);
+        sleep(2);
+        if((LEDControl = fopen(LEDBright,"r+"))!=NULL){
+            //printf("Blinking\n");
+            fwrite("0",sizeof(char),1,LEDControl);
+            //fclose(LEDControl);
+        }
+        sleep(3);
+        x++;
+    }
+}//end blinkLeds
