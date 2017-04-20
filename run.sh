@@ -1,4 +1,4 @@
 #!/bin/bash
-./test data.csv dataoutput.txt settings.txt
+./test /GlucoseAnalyzer/dataoutput.txt /GlucoseAnalyzer/settings.txt
 sleep 3
 gnuplot plot

@@ -22,7 +22,7 @@ int findMin(); /* find the min in dataVals */
 void outputData(char *outputFile); /* outputs the data to a file passed in at argv[2] */
 void sendEmail(); /* not working - but should send email of data */
 void createPlotFile(); /* creates a file to be used for plotting purposes */
-void blinkLeds(); /* should blink usr1 led at mission success */
+//void blinkLeds(); /* should blink usr1 led at mission success */
 
 FILE *fp; /* file pointer with argv[1] */
 FILE *settings; /* settings file */
@@ -54,7 +54,7 @@ int main (int argc, char* argv[]){
     
     //sendEmail();
     
-    blinkLeds();
+//    blinkLeds();
     
     printf("End Main, exiting....\n");
     
@@ -322,18 +322,22 @@ void sendEmail(){
 }//end sendEmail
 
 /* creates a file that is formatted to use with plotter */
+
 void createPlotFile(){
 	FILE *fp = fopen("plotdata.dat", "w");
-	int i=0;
-	for (i; i<NUMDAYS; i++){
-		fprintf(fp, "%d", i+1);
+	int i=NUMDAYS;
+	while(i>0){
+//	for (i; i>0; i--){
+		fprintf(fp, "%d", i);
 		fputs("\t", fp);
-		fputs(data[i], fp);
+		fputs(data[i-1], fp);
 		fputs("\n", fp);
+		i--;
 	}
 }//end createPlotFile
 
 /* blinks usr1 leds for mission success */
+/*
 void blinkLeds(){
     FILE *LEDControl = NULL;
     char *LEDBright = "/sys/class/leds/beaglebone:green:usr1/brightness";
@@ -356,3 +360,4 @@ void blinkLeds(){
         x++;
     }
 }//end blinkLeds
+*/
