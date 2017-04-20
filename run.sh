@@ -1,1 +1,4 @@
-/var/lib/cloud9/mysoftware/test "/var/lib/cloud9/mysoftware/dataoutput.txt" "/var/lib/cloud9/mysoftware/settings.txt"
+#!/bin/bash
+./test data.csv dataoutput.txt settings.txt
+sleep 3
+gnuplot plot
