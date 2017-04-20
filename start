@@ -1,0 +1,2 @@
+#!/bin/bash
+./test data.csv dataoutput.txt settings.txt
