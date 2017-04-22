@@ -23,6 +23,7 @@ void outputData(char *outputFile); /* outputs the data to a file passed in at ar
 void sendEmail(); /* not working - but should send email of data */
 void createPlotFile(); /* creates a file to be used for plotting purposes */
 //void blinkLeds(); /* should blink usr1 led at mission success */
+void generateHTMLFile();
 
 FILE *fp; /* file pointer with argv[1] */
 FILE *settings; /* settings file */
@@ -55,6 +56,8 @@ int main (int argc, char* argv[]){
     //sendEmail();
     
 //    blinkLeds();
+
+    generateHTMLFile();
     
     printf("End Main, exiting....\n");
     
@@ -361,3 +364,31 @@ void blinkLeds(){
     }
 }//end blinkLeds
 */
+
+void generateHTMLFile(){
+	FILE *site = fopen("index.html", "w");
+	int i=0;
+	fputs("<!DOCTYPE html>\n<head>\n<link rel=\"stylesheet\" href=\"styles.css\">\n", site);
+	fputs("<title>My Glucose Levels</title>\n</head>\n<body>\n", site);
+	fputs("<h1>Blood Glucose Levels for the Last 30 Days</h1><br>\n", site);
+	fputs("<table>\n<tr>\n<th>Average Level</th>\n<th>Lowest Level</th>\n<th>Highest Level</th>\n</tr>\n", site);
+	fputs("<tr>\n<td>", site);
+	fprintf(site, "%f", average);
+	fputs("</td>\n<td>", site);
+	fprintf(site, "%d", min);
+	fputs("</td>\n<td>", site);
+	fprintf(site, "%d", max);
+	fputs("</td>\n</tr>\n</table><br><br>", site);
+	fputs("<img src=\"output.jpg\" alt=\"Glucose Graph\"><br><br>\n<table>\n<tr>\n<th>Date</th>\n<th>Glucose Level (mg/dL)</th>\n</tr>\n", site);
+//Put in all the data here!!
+	for(i; i<NUMDAYS; i++){
+		fputs("<tr>\n", site);
+		fputs("<td>", site);
+		fprintf(site, "%s", dates[i]);
+		fputs("</td>\n<td>", site);
+		fprintf(site, "%d", dataVals[i]);
+		fputs("</td>\n", site);
+		fputs("</tr>\n", site);
+	}
+	fputs("</table>\n</body>\n</html>", site);
+}
