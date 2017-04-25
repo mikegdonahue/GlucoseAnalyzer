@@ -208,7 +208,6 @@ void calcData(){
 
 /* Converts data string array to double array */
 void convertToInt(){
-	printf("Made it to start of convertoint\n");
 	int i=0;
 	for(i; i<NUMDAYS; i++){
 		dataVals[i] = atoi(data[i]);
@@ -261,7 +260,9 @@ void outputData(char *outputFile){
     else{
         printf("Output File Opened, writing data...\n");
     }
-    fputs("Glucose Meter Reading Report: Your Last 30 Days\n\n", tmp);
+    fputs("Glucose Meter Reading Report: Your Last ", tmp);
+    fprintf(tmp, "%d", NUMDAYS);
+    fputs(" Days\n\n", tmp);
     fputs("Your Glucose Levels Were:\n\n", tmp);
     int x = NUMDAYS;
     int count=0;

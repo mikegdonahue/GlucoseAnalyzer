@@ -1,4 +1,4 @@
-Glucose Meter Reading Report: Your Last 30 Days
+Glucose Meter Reading Report: Your Last 120 Days
 
 Your Glucose Levels Were:
 
