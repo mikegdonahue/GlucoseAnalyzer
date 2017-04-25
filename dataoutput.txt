@@ -1,16 +1,34 @@
-Glucose Meter Reading Report: Your Last 30 Days
+Glucose Meter Reading Report: Your Last 120 Days
 
 Your Glucose Levels Were:
 
-Days 1 - 5		Date: 27.02.2017 -- 113 mg/dl	Date: 28.02.2017 -- 111 mg/dl	Date: 01.03.2017 -- 97 mg/dl	Date: 02.03.2017 -- 106 mg/dl	Date: 03.03.2017 -- 127 mg/dl
-Days 6 - 10		Date: 04.03.2017 -- 107 mg/dl	Date: 09.03.2017 -- 127 mg/dl	Date: 10.03.2017 -- 150 mg/dl	Date: 11.03.2017 -- 97 mg/dl	Date: 12.03.2017 -- 95 mg/dl
-Days 11 - 15	Date: 13.03.2017 -- 142 mg/dl	Date: 14.03.2017 -- 85 mg/dl	Date: 15.03.2017 -- 111 mg/dl	Date: 17.03.2017 -- 95 mg/dl	Date: 18.03.2017 -- 118 mg/dl
-Days 16 - 20	Date: 19.03.2017 -- 113 mg/dl	Date: 20.03.2017 -- 115 mg/dl	Date: 21.03.2017 -- 101 mg/dl	Date: 22.03.2017 -- 95 mg/dl	Date: 24.03.2017 -- 108 mg/dl
-Days 21 - 25	Date: 25.03.2017 -- 112 mg/dl	Date: 26.03.2017 -- 125 mg/dl	Date: 27.03.2017 -- 114 mg/dl	Date: 28.03.2017 -- 133 mg/dl	Date: 29.03.2017 -- 154 mg/dl
-Days 26 - 30	Date: 30.03.2017 -- 139 mg/dl	Date: 31.03.2017 -- 147 mg/dl	Date: 01.04.2017 -- 156 mg/dl	Date: 02.04.2017 -- 131 mg/dl	Date: 03.04.2017 -- 132 mg/dl
+Days 1 - 5	Date: 3.12.2016 -- 91 mg/dl	Date: 4.12.2016 -- 80 mg/dl	Date: 5.12.2016 -- 105 mg/dl	Date: 6.12.2016 -- 129 mg/dl	Date: 7.12.2016 -- 107 mg/dl
+Days 6 - 10	Date: 8.12.2016 -- 90 mg/dl	Date: 9.12.2016 -- 96 mg/dl	Date: 0.12.2016 -- 108 mg/dl	Date: 1.12.2016 -- 111 mg/dl	Date: 1.01.2017 -- 107 mg/dl
+Days 11 - 15	Date: 2.01.2017 -- 106 mg/dl	Date: 3.01.2017 -- 100 mg/dl	Date: 4.01.2017 -- 111 mg/dl	Date: 5.01.2017 -- 90 mg/dl	Date: 6.01.2017 -- 139 mg/dl
+Days 16 - 20	Date: 7.01.2017 -- 134 mg/dl	Date: 8.01.2017 -- 93 mg/dl	Date: 9.01.2017 -- 100 mg/dl	Date: 0.01.2017 -- 107 mg/dl	Date: 1.01.2017 -- 88 mg/dl
+Days 21 - 25	Date: 2.01.2017 -- 101 mg/dl	Date: 3.01.2017 -- 91 mg/dl	Date: 4.01.2017 -- 98 mg/dl	Date: 5.01.2017 -- 107 mg/dl	Date: 6.01.2017 -- 118 mg/dl
+Days 26 - 30	Date: 7.01.2017 -- 105 mg/dl	Date: 8.01.2017 -- 103 mg/dl	Date: 9.01.2017 -- 101 mg/dl	Date: 0.01.2017 -- 123 mg/dl	Date: 1.01.2017 -- 99 mg/dl
+Days 31 - 35	Date: 2.01.2017 -- 128 mg/dl	Date: 3.01.2017 -- 96 mg/dl	Date: 4.01.2017 -- 116 mg/dl	Date: 5.01.2017 -- 134 mg/dl	Date: 6.01.2017 -- 101 mg/dl
+Days 36 - 40	Date: 7.01.2017 -- 154 mg/dl	Date: 8.01.2017 -- 102 mg/dl	Date: 9.01.2017 -- 117 mg/dl	Date: 0.01.2017 -- 100 mg/dl	Date: 1.01.2017 -- 100 mg/dl
+Days 41 - 45	Date: 1.02.2017 -- 116 mg/dl	Date: 2.02.2017 -- 83 mg/dl	Date: 3.02.2017 -- 103 mg/dl	Date: 4.02.2017 -- 115 mg/dl	Date: 5.02.2017 -- 96 mg/dl
+Days 46 - 50	Date: 6.02.2017 -- 110 mg/dl	Date: 7.02.2017 -- 113 mg/dl	Date: 8.02.2017 -- 103 mg/dl	Date: 9.02.2017 -- 107 mg/dl	Date: 0.02.2017 -- 134 mg/dl
+Days 51 - 55	Date: 1.02.2017 -- 107 mg/dl	Date: 2.02.2017 -- 116 mg/dl	Date: 3.02.2017 -- 148 mg/dl	Date: 4.02.2017 -- 121 mg/dl	Date: 5.02.2017 -- 102 mg/dl
+Days 56 - 60	Date: 6.02.2017 -- 92 mg/dl	Date: 6.02.2017 -- 92 mg/dl	Date: 7.02.2017 -- 106 mg/dl	Date: 7.02.2017 -- 94 mg/dl	Date: 7.02.2017 -- 108 mg/dl
+Days 61 - 65	Date: 8.02.2017 -- 112 mg/dl	Date: 9.02.2017 -- 117 mg/dl	Date: 0.02.2017 -- 111 mg/dl	Date: 1.02.2017 -- 104 mg/dl	Date: 2.02.2017 -- 103 mg/dl
+Days 66 - 70	Date: 3.02.2017 -- 104 mg/dl	Date: 4.02.2017 -- 99 mg/dl	Date: 5.02.2017 -- 139 mg/dl	Date: 6.02.2017 -- 103 mg/dl	Date: 7.02.2017 -- 113 mg/dl
+Days 71 - 75	Date: 8.02.2017 -- 111 mg/dl	Date: 1.03.2017 -- 97 mg/dl	Date: 2.03.2017 -- 106 mg/dl	Date: 3.03.2017 -- 127 mg/dl	Date: 4.03.2017 -- 107 mg/dl
+Days 76 - 80	Date: 9.03.2017 -- 127 mg/dl	Date: 0.03.2017 -- 150 mg/dl	Date: 1.03.2017 -- 97 mg/dl	Date: 2.03.2017 -- 95 mg/dl	Date: 3.03.2017 -- 142 mg/dl
+Days 81 - 85	Date: 4.03.2017 -- 85 mg/dl	Date: 5.03.2017 -- 111 mg/dl	Date: 7.03.2017 -- 95 mg/dl	Date: 8.03.2017 -- 118 mg/dl	Date: 9.03.2017 -- 113 mg/dl
+Days 86 - 90	Date: 0.03.2017 -- 115 mg/dl	Date: 1.03.2017 -- 101 mg/dl	Date: 2.03.2017 -- 95 mg/dl	Date: 4.03.2017 -- 108 mg/dl	Date: 5.03.2017 -- 112 mg/dl
+Days 91 - 95	Date: 6.03.2017 -- 125 mg/dl	Date: 7.03.2017 -- 114 mg/dl	Date: 8.03.2017 -- 133 mg/dl	Date: 9.03.2017 -- 154 mg/dl	Date: 0.03.2017 -- 139 mg/dl
+Days 96 - 100	Date: 1.03.2017 -- 147 mg/dl	Date: 1.04.2017 -- 156 mg/dl	Date: 2.04.2017 -- 131 mg/dl	Date: 3.04.2017 -- 132 mg/dl	Date: 4.04.2017 -- 141 mg/dl
+Days 101 - 105	Date: 5.04.2017 -- 102 mg/dl	Date: 6.04.2017 -- 104 mg/dl	Date: 7.04.2017 -- 137 mg/dl	Date: 08.04.2017 -- 90 mg/dl	Date: 09.04.2017 -- 136 mg/dl
+Days 106 - 110	Date: 10.04.2017 -- 117 mg/dl	Date: 11.04.2017 -- 125 mg/dl	Date: 12.04.2017 -- 119 mg/dl	Date: 13.04.2017 -- 138 mg/dl	Date: 14.04.2017 -- 126 mg/dl
+Days 111 - 115	Date: 15.04.2017 -- 101 mg/dl	Date: 16.04.2017 -- 135 mg/dl	Date: 17.04.2017 -- 137 mg/dl	Date: 18.04.2017 -- 116 mg/dl	Date: 19.04.2017 -- 124 mg/dl
+Days 116 - 120	Date: 20.04.2017 -- 112 mg/dl	Date: 21.04.2017 -- 110 mg/dl	Date: 22.04.2017 -- 161 mg/dl	Date: 23.04.2017 -- 126 mg/dl	Date: 24.04.2017 -- 121 mg/dl
 
-Your Average Glucose Level Was: 118.533333
+Your Average Glucose Level Was: 113.150000
 
-Your Lowest Glucose Level Was: 85
+Your Lowest Glucose Level Was: 80
 
-Your Highest Glucose Level Was: 156
+Your Highest Glucose Level Was: 161

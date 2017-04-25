@@ -94,7 +94,11 @@ void openFile(char *outPut,char *settingsFile){
 
 /* looks at the settings files and thus affects the overall settings, also opens the input file */
 void getSettings(){
+<<<<<<< HEAD
     int numDays=0;
+=======
+    int numDays=30;
+>>>>>>> origin/master
     dataPath = malloc(sizeof(char)*PATH_BUFFER);
     fscanf(settings,"%d",&numDays);
     if(numDays==0){
