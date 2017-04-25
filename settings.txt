@@ -1,2 +1,2 @@
-30
-null
+150
+/media/usb/ACCU-CHEK/Reports/diary.csv
