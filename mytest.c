@@ -20,9 +20,9 @@ double computeAverage(); /* computes the average in dataVals */
 int findMax(); /* find the max in dataVals */
 int findMin(); /* find the min in dataVals */
 void outputData(char *outputFile); /* outputs the data to a file passed in at argv[2] */
-void sendEmail(); /* not working - but should send email of data */
 void createPlotFile(); /* creates a file to be used for plotting purposes */
-void blinkLeds(); /* should blink usr1 led at mission success */
+//void blinkLeds(); /* should blink usr1 led at mission success */
+void generateHTMLFile();
 
 FILE *fp; /* file pointer with argv[1] */
 FILE *settings; /* settings file */
@@ -41,7 +41,10 @@ int main (int argc, char* argv[]){
     openFile(argv[1],argv[2]);
     
     getSettings();
-    
+//    if((fp = fopen("diary.csv","r"))==NULL){
+//            printf("Error opening data file...\n");
+//            exit(EXIT_FAILURE);
+//    }
     importLines();
     
     calcData();
@@ -54,7 +57,9 @@ int main (int argc, char* argv[]){
     
     //sendEmail();
     
-    blinkLeds();
+//    blinkLeds();
+
+    generateHTMLFile();
     
     printf("End Main, exiting....\n");
     
@@ -67,6 +72,7 @@ void openFile(char *outPut,char *settingsFile){
     
 /* open settings file */ 
     settings = fopen(settingsFile,"r");
+    
     if(settings==NULL){
         printf("Settings File Not Found...\n");
         exit(EXIT_FAILURE);
@@ -88,12 +94,14 @@ void openFile(char *outPut,char *settingsFile){
 
 /* looks at the settings files and thus affects the overall settings, also opens the input file */
 void getSettings(){
-    int numDays;
+    int numDays=0;
     dataPath = malloc(sizeof(char)*PATH_BUFFER);
     fscanf(settings,"%d",&numDays);
-    fscanf(settings,"%s",dataPath);
-    
-    if(strcmp(dataPath,"null")!=0){
+    if(numDays==0){
+        numDays=30;
+    }
+    fscanf(settings,"%s",dataPath); 
+    if((strcmp(dataPath,"null")!=0)&&(strcmp(dataPath,"")!=0)){
         printf("Path: %s\n",dataPath);
         if((fp = fopen(dataPath,"r"))==NULL){
             printf("Error opening data file...\n");
@@ -101,13 +109,14 @@ void getSettings(){
         }
     }else{//default 
         printf("No input path found, defaulting to current dir...\n");
-        dataPath = "data.csv";
+        dataPath = "diary.csv";
         if((fp = fopen(dataPath,"r"))==NULL){
             printf("Error opening data file...\n");
             exit(EXIT_FAILURE);
         }
     }
     
+
     if(numDays==0){//default 
         NUMDAYS = 30;
     }
@@ -118,20 +127,23 @@ void getSettings(){
         NUMDAYS=numDays;
     }
     printf("Settings File Found numDays: %d\n",numDays);
+
 }
+
 
 /* does some loops and calls getLine and parseLine to import the data of the file */
 void importLines(){
 
 /* get lines for correct amount of desired readings */
-    fseek(fp,393,SEEK_SET);//seek to first needed line of dates and data
-    char c;
+  fseek(fp,399,SEEK_SET);//seek to first needed line of dates and data	//WAS 393
+  char c;
     int x=0;
     char *test[NUMDAYS];
     while(x<NUMDAYS){
         test[x]=malloc(sizeof(char)*26);
         test[x]=getLine(fp);
         x++;
+	fseek(fp, 1, SEEK_CUR);
     }
     
 /* parse the lines for dates and data */
@@ -158,10 +170,9 @@ char *getLine (FILE *fp){
 void parseLine(char*line, int index){
     char*tmp=strtok(line,";");
     dates[index]=tmp;
-    tmp=strtok(NULL,";");
+  tmp=strtok(NULL,";");
     tmp=strtok(NULL,";");
     data[index]=tmp;
-    
 }//end parseLine
 
 /*call this if you wish to quickly print out the info stored in dates and data
@@ -251,30 +262,21 @@ void outputData(char *outputFile){
     else{
         printf("Output File Opened, writing data...\n");
     }
-    fputs("Glucose Meter Reading Report: Your Last 30 Days\n\n", tmp);
+    fputs("Glucose Meter Reading Report: Your Last ", tmp);
+    fprintf(tmp, "%d", NUMDAYS);
+    fputs(" Days\n\n", tmp);
     fputs("Your Glucose Levels Were:\n\n", tmp);
-    int x = 30;
+    int x = NUMDAYS;
+    int count=0;
     while(x>0){
-	switch(x){
-		case 30:
-			fputs("Days 1 - 5\t\t", tmp);
-			break;
-		case 25:
-			fputs("Days 6 - 10\t\t", tmp);
-			break;
-		case 20:
-			fputs("Days 11 - 15\t", tmp);
-			break;
-		case 15:
-			fputs("Days 16 - 20\t", tmp);
-			break;
-		case 10:
-			fputs("Days 21 - 25\t", tmp);
-			break;
-		case 5:
-			fputs("Days 26 - 30\t", tmp);
-			break;
+	if(x%5==0){
+		fputs("Days ", tmp);
+		fprintf(tmp, "%d", (count*5)+1);
+		fputs(" - ", tmp);
+		fprintf(tmp, "%d\t", (count*5)+5);
+		count++;
 	}
+
         fputs("Date: ",tmp);
         fputs(dates[x-1],tmp);
         fputs(" -- ",tmp);
@@ -302,38 +304,23 @@ void outputData(char *outputFile){
     
 }//end outputData
 
-/* suppose to send data to email */
-void sendEmail(){
-        char cmd[100];  // to hold the command.
-        char to[] = "tug14646@temple.edu"; // email id of the recepient.
-        char body[] = "This is a test email sent from a BeagleBone Black.";    // email body.
-        char tempFile[100];     // name of tempfile.
-
-        strcpy(tempFile,tempnam("/tmp","sendmail")); // generate temp file name.
-
-        FILE *fp = fopen(tempFile,"w"); // open it for writing.
-        fprintf(fp,"%s\n",body);        // write body to it.
-//        fclose(fp);             // close it.
-
-        sprintf(cmd,"sendmail %s < %s",to,tempFile); // prepare command.
-        system(cmd);     // execute it.
-
-
-}//end sendEmail
-
 /* creates a file that is formatted to use with plotter */
+
 void createPlotFile(){
 	FILE *fp = fopen("plotdata.dat", "w");
-	int i=0;
-	for (i; i<NUMDAYS; i++){
-		fprintf(fp, "%d", i+1);
+	int i=NUMDAYS;
+	while(i>0){
+//	for (i; i>0; i--){
+		fprintf(fp, "%d", i);
 		fputs("\t", fp);
-		fputs(data[i], fp);
+		fputs(data[i-1], fp);
 		fputs("\n", fp);
+		i--;
 	}
 }//end createPlotFile
 
 /* blinks usr1 leds for mission success */
+/*
 void blinkLeds(){
     FILE *LEDControl = NULL;
     char *LEDBright = "/sys/class/leds/beaglebone:green:usr1/brightness";
@@ -356,3 +343,34 @@ void blinkLeds(){
         x++;
     }
 }//end blinkLeds
+*/
+
+void generateHTMLFile(){
+	FILE *site = fopen("index.html", "w");
+	int i=0;
+	fputs("<!DOCTYPE html>\n<head>\n<link rel=\"stylesheet\" href=\"styles.css\">\n", site);
+	fputs("<title>My Glucose Levels</title>\n</head>\n<body>\n", site);
+	fputs("<h1>Blood Glucose Levels for the Last ", site);
+	fprintf(site, "%d", NUMDAYS);
+	fputs(" Days</h1><br>\n", site);
+	fputs("<table>\n<tr>\n<th>Average Level</th>\n<th>Lowest Level</th>\n<th>Highest Level</th>\n</tr>\n", site);
+	fputs("<tr>\n<td>", site);
+	fprintf(site, "%f", average);
+	fputs("</td>\n<td>", site);
+	fprintf(site, "%d", min);
+	fputs("</td>\n<td>", site);
+	fprintf(site, "%d", max);
+	fputs("</td>\n</tr>\n</table><br><br>", site);
+	fputs("<img src=\"output.jpg\" alt=\"Glucose Graph\"><br><br>\n<table>\n<tr>\n<th>Date</th>\n<th>Glucose Level (mg/dL)</th>\n</tr>\n", site);
+//Put in all the data here!!
+	for(i; i<NUMDAYS; i++){
+		fputs("<tr>\n", site);
+		fputs("<td>", site);
+		fprintf(site, "%s", dates[i]);
+		fputs("</td>\n<td>", site);
+		fprintf(site, "%d", dataVals[i]);
+		fputs("</td>\n", site);
+		fputs("</tr>\n", site);
+	}
+	fputs("</table>\n</body>\n</html>", site);
+}
