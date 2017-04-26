@@ -35,7 +35,7 @@ However, the program will not work if the device is not mounted properly.
 Also note the settings file provided with the files, this is vital for allowing the program to run and more user friendly than hardcoding everything the user may want to do.
 Below (by line) is what the settings could do:
 1.	Number of days to pull and calculate (note this cannot be above 120 days) (Default: 30)
-2.	The exact path of the data file (dariy.csv)
+2.	The exact path of the data file (diary.csv)
 3.  Push to website or not 0 no 1 yes (Default: 0)
 
 
