@@ -35,6 +35,7 @@ Also note the settings file provided with the files, this is vital for allowing 
 Below (by line) is what the settings could do:
 1.	Number of days to pull and calculate (note this cannot be above 120 days) (Default: 30)
 2.	The exact path of the data file (dariy.csv)
+3.  Push to website or not 0 no 1 yes (Default: 0)
 
 
 Note that if the settings file is left blank/null/empty it will default to 30 days and the current directory for the data file. One could also set the settings file to 0 and null for line 1 & 2 this will also use default settings. All other inputs will be considered valid and may result in the program not working properly. Ensure you only have an integer for the first line and a path name or file name for the second line.
