@@ -1,5 +1,7 @@
 # Glucose Data Analysis for Beagle Bone Black
 
+![Screenshot](https://github.com/mikegdonahue/GlucoseAnalyzer/Screenshot.png)
+
 Developed by: Justin Schmidt and Michael Donahue
 
 Overview
