@@ -1,2 +1,3 @@
-150
-null
+30
+/GlucoseAnalyzer/diary.csv
+1

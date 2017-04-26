@@ -5,7 +5,8 @@
 
 #define MAXDAYS 120 /* prevent overflow by the usr */
 #define PATH_BUFFER 400 /* buffer for path provided by usr */
-#define BUFFER 100 /* general buffer */ 
+#define BUFFER 200 /* general buffer */ 
+size_t LINE_BUFF = 200;
 
 void openFile(char *outPut,char *settingsFile); /* opens the files */
 void getSettings(); /* idea for importing settings from an extra .txt file for various outputs */
@@ -21,13 +22,15 @@ int findMax(); /* find the max in dataVals */
 int findMin(); /* find the min in dataVals */
 void outputData(char *outputFile); /* outputs the data to a file passed in at argv[2] */
 void createPlotFile(); /* creates a file to be used for plotting purposes */
-//void blinkLeds(); /* should blink usr1 led at mission success */
-void generateHTMLFile();
+void generateHTMLFile();/* generates the html file */
+void generatePlotFile(); /* gens plot */
+void pushToWebsite(); /* see this func for more info*/
 
 FILE *fp; /* file pointer with argv[1] */
 FILE *settings; /* settings file */
 char *outputFile; /* file pointer with argv[2] if passed in */
 char *dataPath; /* path where data.csv file is, if NULL defaults to current dir */
+int pushWebsite = 0; /* wheter or not to push to a website check line here for how you want this system call to work*/
 char *dates[MAXDAYS]; /* array of strings that stores the datas from the input file */
 char *data[MAXDAYS]; /* array of strings that stores the data/reading from the input file */
 int dataVals[MAXDAYS]; /* array of the data but converted to int */
@@ -41,26 +44,23 @@ int main (int argc, char* argv[]){
     openFile(argv[1],argv[2]);
     
     getSettings();
-//    if((fp = fopen("diary.csv","r"))==NULL){
-//            printf("Error opening data file...\n");
-//            exit(EXIT_FAILURE);
-//    }
+
     importLines();
     
     calcData();
     
-    //printData();
+    printData();
     
     outputData(outputFile);
 
     createPlotFile();
     
-    //sendEmail();
-    
-//    blinkLeds();
-
     generateHTMLFile();
-    
+
+    generatePlotFile();
+
+    pushToWebsite();
+ 
     printf("End Main, exiting....\n");
     
     exit(EXIT_SUCCESS);
@@ -78,7 +78,7 @@ void openFile(char *outPut,char *settingsFile){
         exit(EXIT_FAILURE);
     }
     
-    mallocData();
+    //mallocData();
     
 /* get name of ouputFile from argv[1]*/ 
     if(outPut==NULL){
@@ -86,10 +86,9 @@ void openFile(char *outPut,char *settingsFile){
         exit(EXIT_FAILURE);
     }
     else{
-        outputFile = malloc(sizeof(char)*BUFFER);
         outputFile = outPut;
     }
-    
+
 }//end openFile
 
 /* looks at the settings files and thus affects the overall settings, also opens the input file */
@@ -115,7 +114,13 @@ void getSettings(){
             exit(EXIT_FAILURE);
         }
     }
-    
+    fscanf(settings,"%d",&pushWebsite);
+
+    if(pushWebsite==0){
+	printf("PushtoWebsite? NO\n");
+    }else{
+	printf("PushtoWebsite? Yes\n");
+    }
 
     if(numDays==0){//default 
         NUMDAYS = 30;
@@ -140,10 +145,10 @@ void importLines(){
     int x=0;
     char *test[NUMDAYS];
     while(x<NUMDAYS){
-        test[x]=malloc(sizeof(char)*26);
+        test[x]=malloc(sizeof(char)*LINE_BUFF);
         test[x]=getLine(fp);
         x++;
-	fseek(fp, 1, SEEK_CUR);
+	//fseek(fp, 1, SEEK_CUR);
     }
     
 /* parse the lines for dates and data */
@@ -153,14 +158,16 @@ void importLines(){
         parseLine(test[a],a);
         a++;
         x++;
+	//free(test[a]);
     }
+
 }//end importLines
 
 /* reads a line from the file of 100 chars long just to make sure you reach end of line returns this line to caller */
 char *getLine (FILE *fp){
     char *line;
-    line = malloc(sizeof(char)*26);
-    fgets(line,45,fp);
+    line = malloc(sizeof(char)*LINE_BUFF);
+    getline(&line,&LINE_BUFF,fp);
     //fseek(fp,1,SEEK_CUR);
     //printf("Line Read: %s\n",line);
     return line;
@@ -317,33 +324,10 @@ void createPlotFile(){
 		fputs("\n", fp);
 		i--;
 	}
+	fclose(fp);
 }//end createPlotFile
 
-/* blinks usr1 leds for mission success */
-/*
-void blinkLeds(){
-    FILE *LEDControl = NULL;
-    char *LEDBright = "/sys/class/leds/beaglebone:green:usr1/brightness";
-    int loops = 2;
-    int x = 0;
-    while (x<loops){
-        if((LEDControl = fopen(LEDBright,"r+"))!=NULL){
-            //printf("Blinking\n");
-            fwrite("1",sizeof(char),1,LEDControl);
-            //fclose(LEDControl);
-        }
-        rewind(LEDControl);
-        sleep(2);
-        if((LEDControl = fopen(LEDBright,"r+"))!=NULL){
-            //printf("Blinking\n");
-            fwrite("0",sizeof(char),1,LEDControl);
-            //fclose(LEDControl);
-        }
-        sleep(3);
-        x++;
-    }
-}//end blinkLeds
-*/
+/* generate the HTML */
 
 void generateHTMLFile(){
 	FILE *site = fopen("index.html", "w");
@@ -373,4 +357,22 @@ void generateHTMLFile(){
 		fputs("</tr>\n", site);
 	}
 	fputs("</table>\n</body>\n</html>", site);
+	fclose(site);
+}
+
+/* this calls the script plot that makes the .jpg */
+void generatePlotFile(){
+	int ret = system("gnuplot 'plot'");
+	printf("plotret: %d\n",ret);
+	sleep(2);
+}
+
+/* function to push the html file to a website*/
+void pushToWebsite(){
+	if(pushWebsite==1){
+		int ret = system("./sitepush.sh"); /* here is where you would edit if you wanted to change what site to push to see sitepush.sh */
+		printf("webpushret: %d\n",ret);
+	}else{
+		return;
+	}
 }
