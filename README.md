@@ -28,6 +28,7 @@ There was also a lot of apt-get installs for this project some important ones ar
 ##### Also note that significant power is needed to prevent errors, we recommend using the BB with an AC Adapter and not power from the USB port, especially if you are using a USB Hub or Wi-Fi adapter. 
 
 # Important Notes:
+##### Some files need permissions: chmod +wrx 'filename' will work, two notable ones are run.sh and sitepush.sh
 Beagle Bone requires a USB mount for the device to be recognized when plugged in.
 This could be developed manually or with various packages available for download.
 However, the program will not work if the device is not mounted properly.
