@@ -41,7 +41,7 @@ Below (by line) is what the settings could do:
 2.	The exact path of the data file (diary.csv)
 3.  Push to website or not 0 no 1 yes (Default: 0)
 
-
+#### Even if you do not push to a website the html file and .jpg will be placed under the /site/ folder with included .css so you can still view the data locally.
 Note that if the settings file is left blank/null/empty it will default to 30 days and the current directory for the data file. One could also set the settings file to 0 and null for line 1 & 2 this will also use default settings. All other inputs will be considered valid and may result in the program not working properly. Ensure you only have an integer for the first line and a path name or file name for the second line.
 #### Running The Program...
 The first step is to compile ./mytest.c
