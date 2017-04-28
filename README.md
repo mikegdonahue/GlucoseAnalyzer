@@ -1,6 +1,6 @@
 # Glucose Data Analysis for Beagle Bone Black
 #### Note this readme is written in markdown format, for best viewing please use github.com
-
+#### Note this data pull is specific to the format of diary.csv (see file)
 ![Screenshot](https://github.com/mikegdonahue/GlucoseAnalyzer/blob/master/Screenshot.png)
 
 Developed by: Justin Schmidt and Michael Donahue
@@ -67,3 +67,10 @@ Your pins need to be set up by the shown schematic and your board must support A
 
 Once the button is pressed it should call another script called run.sh which will launch the program as usual.
 Run.sh will mount any sda1 USB plugged into the Beagle Bone or hub. And will mount this USB to /media/usb0 after the script has fully run (without errors) it will then unmount this USB. 
+
+### Known Issues
+There may be some bugs that are unknown to us (developers), although we did our best to avoid this. Please feel free to report any issues to our github.
+There are bugs where if the user was to enter the incorrect info., for settings, the program could bomb.
+Also incorrect data paths could also result in the same issue. 
+Attempting to run the program with website push without a proper website set up or network connection will result in an error and exit the program. 
+Again the format is specific to diary.csv and will not play well with other data files.
