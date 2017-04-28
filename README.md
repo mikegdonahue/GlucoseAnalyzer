@@ -1,4 +1,5 @@
 # Glucose Data Analysis for Beagle Bone Black
+#### Note this readme is written in markdown format, for best viewing please use github.com
 
 ![Screenshot](https://github.com/mikegdonahue/GlucoseAnalyzer/blob/master/Screenshot.png)
 
@@ -8,7 +9,7 @@ Overview
 
 This project was developed on the Beagle Bone Black  Rev C using:
 
-Description:    Debian GNU/Linux 8.7 (jessie) Release:        8.7 Codename:       jessie
+Description:    **Debian GNU/Linux 8.7 (jessie) Release:        8.7 Codename:       jessie**
 
 We also used the following hardware for the push button/LEDS:
 
@@ -42,15 +43,27 @@ Below (by line) is what the settings could do:
 
 
 Note that if the settings file is left blank/null/empty it will default to 30 days and the current directory for the data file. One could also set the settings file to 0 and null for line 1 & 2 this will also use default settings. All other inputs will be considered valid and may result in the program not working properly. Ensure you only have an integer for the first line and a path name or file name for the second line.
+#### Running The Program...
+The first step is to compile ./mytest.c
+
+**gcc -o mytest mytest.c**
+
+Again some premissions may be needed so we recommend.
+
+**chmod +x sitepush.sh (if using site)**
+
+**chmod +x run.sh (if using pushbutton)**
+
 #### USING THE PROGRAM WITHOUT PUSH BUTTON…
+##### Please take note of the settings file and ensure the proper settings are in place before running...
 You could run this program where ever you have it placed by running the command:
-test dataoutput.txt settings.txt
+./mytest dataoutput.txt settings.txt
 The program should run normally.
 #### USING THE PROGRAM WITH PUSH BUTTON…
 This is a bit more complicated but could be done with necessary hardware. 
 Your pins need to be set up by the shown schematic and your board must support Adafruit.BBIO.GPIO. A python package most commonly available in newer python versions.
 
-python switch.py
+**python switch.py**
 
 Once the button is pressed it should call another script called run.sh which will launch the program as usual.
 Run.sh will mount any sda1 USB plugged into the Beagle Bone or hub. And will mount this USB to /media/usb0 after the script has fully run (without errors) it will then unmount this USB. 
